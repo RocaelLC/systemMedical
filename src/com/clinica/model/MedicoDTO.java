@@ -1,25 +1,54 @@
-// src/com/clinica/model/MedicoDTO.java
 package com.clinica.model;
+
 import java.io.Serializable;
 
 public class MedicoDTO implements Serializable {
-  private int idMedico;
-  private String nombre, especialidad, cedula, email;
-  // getters/setters y constructor vacío
-}
+    private int idMedico;
+    private String nombre;
+    private String especialidad;
+    private String cedula;
+    private String email;
 
-// PacienteDTO y CitaDTO similares,
-// en com.clinica.model, con campos acordes a la tabla.
+    public MedicoDTO() {
+    }
 
-// src/com/clinica/util/DBUtil.java
-package com.clinica.util;
-import java.sql.*;
+    public int getIdMedico() {
+        return idMedico;
+    }
 
-public class DBUtil {
-  private static final String URL = "jdbc:mysql://localhost:3306/clinica";
-  private static final String USER = "root", PASS = "tu_password";
+    public void setIdMedico(int idMedico) {
+        this.idMedico = idMedico;
+    }
 
-  public static Connection getConnection() throws SQLException {
-    return DriverManager.getConnection(URL, USER, PASS);
-  }
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getEspecialidad() {
+        return especialidad;
+    }
+
+    public void setEspecialidad(String especialidad) {
+        this.especialidad = especialidad;
+    }
+
+    public String getCedula() {
+        return cedula;
+    }
+
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

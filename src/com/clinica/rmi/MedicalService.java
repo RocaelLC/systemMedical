@@ -1,6 +1,5 @@
-// src/com/clinica/rmi/MedicalService.java
 package com.clinica.rmi;
-
+import com.clinica.model.*;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
