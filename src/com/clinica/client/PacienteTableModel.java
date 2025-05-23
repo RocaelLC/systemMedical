@@ -1,9 +1,9 @@
 package com.clinica.client;
 
 import com.clinica.model.PacienteDTO;
-import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.table.AbstractTableModel;
 
 public class PacienteTableModel extends AbstractTableModel {
     private List<PacienteDTO> lista = new ArrayList<>();
@@ -18,7 +18,11 @@ public class PacienteTableModel extends AbstractTableModel {
         return lista.get(row);
     }
 
-    @Override public int getRowCount() { return lista.size(); }
+   @Override
+public int getRowCount() {
+    return lista == null ? 0 : lista.size();
+}
+
     @Override public int getColumnCount() { return cols.length; }
     @Override public String getColumnName(int c) { return cols[c]; }
 

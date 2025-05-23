@@ -1,24 +1,25 @@
 {
-    "version": "0.2.0",
-    "configurations": [
-      {
-        "type": "java",
-        "name": "Run RMI Server",
-        "request": "launch",
-        "mainClass": "com.clinica.server.ServerMain",
-        "classPaths": [
-          "${workspaceFolder}/lib/mysql-connector-java.jar"
-        ]
-      },
-      {
-        "type": "java",
-        "name": "Run Swing Client",
-        "request": "launch",
-        "mainClass": "com.clinica.client.ClientMain",
-        "classPaths": [
-          "${workspaceFolder}/lib/mysql-connector-java.jar"
-        ]
-      }
-    ]
-  }
-  
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Run RMI Server",
+      "request": "launch",
+      "mainClass": "com.clinica.server.ServerMain",
+      "classPaths": [
+        "${workspaceFolder}/bin",
+        "${workspaceFolder}/lib/mysql-connector-java.jar"
+      ]
+    },
+    {
+      "type": "java",
+      "name": "Run Swing Client",
+      "request": "launch",
+      "mainClass": "com.clinica.client.ClientMain",
+      "classPaths": [
+        "${workspaceFolder}/bin",
+        "${workspaceFolder}/lib/mysql-connector-java.jar"
+      ]
+    }
+  ]
+}

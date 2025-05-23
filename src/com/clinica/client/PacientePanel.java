@@ -2,8 +2,8 @@ package com.clinica.client;
 
 import com.clinica.model.PacienteDTO;
 import com.clinica.rmi.MedicalService;
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
 public class PacientePanel extends JPanel {
     private final MedicalService srv;
@@ -14,41 +14,69 @@ public class PacientePanel extends JPanel {
         this.srv = srv;
         setLayout(new BorderLayout());
         add(new JScrollPane(table), BorderLayout.CENTER);
+
         JPanel btns = new JPanel();
-        JButton add = new JButton("Nuevo"), edit = new JButton("Editar"), del = new JButton("Borrar");
-        btns.add(add); btns.add(edit); btns.add(del);
+        JButton btnNew     = new JButton("Nuevo");
+        JButton btnEdit    = new JButton("Editar");
+        JButton btnDelete  = new JButton("Borrar");
+        JButton btnRefresh = new JButton("Actualizar");
+
+        btns.add(btnNew);
+        btns.add(btnEdit);
+        btns.add(btnDelete);
+        btns.add(btnRefresh);
         add(btns, BorderLayout.SOUTH);
 
-        add.addActionListener(e -> openDialog(null));
-        edit.addActionListener(e -> {
+        btnNew.addActionListener(e -> openDialog(null));
+        btnEdit.addActionListener(e -> {
             int r = table.getSelectedRow();
-            if (r>=0) openDialog(model.getPacienteAt(r));
-            else JOptionPane.showMessageDialog(this,"Selecciona un paciente");
+            if (r >= 0) openDialog(model.getPacienteAt(r));
+            else JOptionPane.showMessageDialog(this, "Selecciona un paciente");
         });
-        del.addActionListener(e -> {
+        btnDelete.addActionListener(e -> {
             int r = table.getSelectedRow();
-            if (r>=0) {
+            if (r >= 0) {
                 int id = model.getPacienteAt(r).getIdPaciente();
-                try { srv.deletePaciente(id); load(); }
-                catch(Exception ex){ showError(ex); }
-            } else JOptionPane.showMessageDialog(this,"Selecciona un paciente");
+                try {
+                    srv.deletePaciente(id);
+                    load();
+                } catch (Exception ex) { showError(ex); }
+            } else {
+                JOptionPane.showMessageDialog(this, "Selecciona un paciente");
+            }
+        });
+        btnRefresh.addActionListener(e -> {
+            System.out.println("[Client Paciente] Botón Actualizar pulsado");
+            load();
         });
 
         load();
     }
 
     private void load() {
-        try { model.setPacientes(srv.getAllPacientes()); }
-        catch(Exception ex){ showError(ex); }
+        System.out.println("[Client Paciente] load(): llamando getAllPacientes()");
+        try {
+            model.setPacientes(srv.getAllPacientes());
+        } catch (Exception ex) {
+            showError(ex);
+        }
     }
 
     private void openDialog(PacienteDTO p) {
-        PacienteDialog dlg = new PacienteDialog(SwingUtilities.getWindowAncestor(this), srv, p);
+        PacienteDialog dlg = new PacienteDialog(
+            SwingUtilities.getWindowAncestor(this),
+            srv,
+            p
+        );
         dlg.setVisible(true);
-        if (dlg.isSaved()) load();
+        System.out.println("[Client Paciente] openDialog(): saved = " + dlg.isSaved());
+        if (dlg.isSaved()) {
+            System.out.println("[Client Paciente] openDialog(): recargando tabla");
+            load();
+        }
     }
 
     private void showError(Exception ex) {
-        JOptionPane.showMessageDialog(this, "Error: "+ex.getMessage());
+        JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
     }
 }

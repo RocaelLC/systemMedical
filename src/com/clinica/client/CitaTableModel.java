@@ -1,11 +1,12 @@
 package com.clinica.client;
 
 import com.clinica.model.CitaDTO;
-import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.table.AbstractTableModel;
 
 public class CitaTableModel extends AbstractTableModel {
+    // Inicializamos siempre la lista para evitar NPE
     private List<CitaDTO> lista = new ArrayList<>();
     private final String[] cols = {"ID","Fecha","Hora","Motivo","ID Médico","ID Paciente"};
 
@@ -18,9 +19,20 @@ public class CitaTableModel extends AbstractTableModel {
         return lista.get(row);
     }
 
-    @Override public int getRowCount() { return lista.size(); }
-    @Override public int getColumnCount() { return cols.length; }
-    @Override public String getColumnName(int c) { return cols[c]; }
+    @Override
+    public int getRowCount() {
+        return lista == null ? 0 : lista.size();
+    }
+
+    @Override
+    public int getColumnCount() {
+        return cols.length;
+    }
+
+    @Override
+    public String getColumnName(int c) {
+        return cols[c];
+    }
 
     @Override
     public Object getValueAt(int r, int c) {
