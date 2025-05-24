@@ -3,13 +3,22 @@ package com.clinica.model;
 import java.io.Serializable;
 
 public class PacienteDTO implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private int idPaciente;
     private String nombre;
     private String curp;
     private String telefono;
     private String email;
 
-    public PacienteDTO() {
+    public PacienteDTO() { }
+
+    public PacienteDTO(int idPaciente, String nombre, String curp, String telefono, String email) {
+        this.idPaciente = idPaciente;
+        this.nombre     = nombre;
+        this.curp       = curp;
+        this.telefono   = telefono;
+        this.email      = email;
     }
 
     public int getIdPaciente() {
@@ -50,5 +59,10 @@ public class PacienteDTO implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return idPaciente + " - " + nombre;
     }
 }

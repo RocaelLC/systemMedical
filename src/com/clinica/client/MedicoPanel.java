@@ -3,6 +3,8 @@ package com.clinica.client;
 import com.clinica.model.MedicoDTO;
 import com.clinica.rmi.MedicalService;
 import java.awt.*;
+import java.rmi.RemoteException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import javax.swing.*;
 
 public class MedicoPanel extends JPanel {
@@ -45,8 +47,20 @@ public class MedicoPanel extends JPanel {
                 try {
                     srv.deleteMedico(id);
                     load();
-                } catch (Exception ex) {
-                    showError(ex);
+                } catch (RemoteException ex) {
+                    Throwable cause = ex.getCause();
+                    if (cause instanceof SQLIntegrityConstraintViolationException
+                        || (cause != null && cause.getMessage().contains("Cannot delete or update a parent row"))) {
+                        JOptionPane.showMessageDialog(
+                            this,
+                            "No puedes borrar este médico porque tiene citas programadas.\n" +
+                            "Por favor, elimina primero las citas asociadas a este médico.",
+                            "Error al borrar médico",
+                            JOptionPane.WARNING_MESSAGE
+                        );
+                    } else {
+                        showError(ex);
+                    }
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Selecciona un médico");
